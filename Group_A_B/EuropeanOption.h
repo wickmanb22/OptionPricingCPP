@@ -27,8 +27,8 @@ public:
 	EuropeanOption& operator = (const EuropeanOption& opt); // assignment operator
 
 	// member functions
-	double optionPrice() const; // vanilla price
-	// vector<double> optionPrice() const; 
+	double optionPrice() const; 
+	//vector<double> optionPrice() const; 
 	double pcParity() const; // calculate corresponding option price
 	void pcParity(double option_price) const; // check if parity satisfied
 };
