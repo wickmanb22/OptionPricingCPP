@@ -6,6 +6,7 @@
 #define euro_option_cpp
 
 // Dependencies
+#include "Option.h"
 #include "EuropeanOption.h"
 #include <boost/random.hpp>
 #include <boost/math/distributions/normal.hpp>
@@ -15,30 +16,24 @@ using namespace std;
 using namespace boost::math;
 
 // Define array with names for optionType
-const char* optionType_names[] = { "call", "put" };
+//const char* optionType_names[] = { "call", "put" };
 
 // Constructors
-EuropeanOption::EuropeanOption() : option_type(call), expiry(0.25), strike(65.0), sig(0.30), rf_rate(0.08), asset_price(60.0) { }
+EuropeanOption::EuropeanOption() : Option() { }
 
 EuropeanOption::EuropeanOption(optionType option_type, double expiry, double strike, double sig,
-	double rf_rate, double asset_price) : option_type(option_type), expiry(expiry), strike(strike), sig(sig), rf_rate(rf_rate), asset_price(asset_price) { }
+	double rf_rate, double asset_price) : Option(option_type, expiry, strike, sig, rf_rate, asset_price) { }
 
-EuropeanOption::EuropeanOption(optionType option_type, array<double, 5> option_input) : option_type(option_type), expiry(option_input[0]), strike(option_input[1]), sig(option_input[2]), rf_rate(option_input[3]), asset_price(option_input[4]) { }
+EuropeanOption::EuropeanOption(optionType option_type, array<double, 5> option_input) : Option(option_type, option_input[0], option_input[1], option_input[2], option_input[3], option_input[4]) { }
 
-EuropeanOption::EuropeanOption(const EuropeanOption& option) : option_type(option.option_type), expiry(option.expiry), strike(option.strike), sig(option.sig), rf_rate(option.rf_rate), asset_price(option.asset_price) { }
+EuropeanOption::EuropeanOption(const EuropeanOption& opt) : Option(opt) { }
 
 EuropeanOption::~EuropeanOption() { }
 
 // Operators
-EuropeanOption& EuropeanOption::operator = (const EuropeanOption& option) 
+EuropeanOption& EuropeanOption::operator = (const EuropeanOption& opt) 
 { // assignment operator
-	option_type = option.option_type;
-	expiry = option.expiry;
-	strike = option.strike;
-	sig = option.sig;
-	rf_rate = option.rf_rate;
-	asset_price = option.asset_price;
-
+	Option::operator=(opt);
 	return *this;
 }
 

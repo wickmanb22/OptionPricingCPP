@@ -3,6 +3,7 @@
 
 // Dependencies
 #include "EuropeanOption.h"
+#include "Option.h"
 #include <array>
 #include <vector>
 #include <cmath>
@@ -33,6 +34,7 @@ int main()
 	array<double, 5> batch3_param = { 1.0, 10.0, 0.50, 0.12, 5.0 };
 	array<double, 5> batch4_param = { 30.0, 100.0, 0.30, 0.08, 100.0 };
 
+	
 	// Construct calls
 	EuropeanOption batch1_call = EuropeanOption(type, batch1_param);
 	EuropeanOption batch2_call = EuropeanOption(type, batch2_param);
@@ -46,14 +48,14 @@ int main()
 	EuropeanOption batch3_put = EuropeanOption(type_put, batch3_param);
 	EuropeanOption batch4_put = EuropeanOption(type_put, batch4_param);
 
-	/*
+
 	// Check prices
 	cout << "Batch 1; Call: " << batch1_call.optionPrice() << " Put: " << batch1_put.optionPrice() << endl;
 	cout << "Batch 2; Call: " << batch2_call.optionPrice() << " Put: " << batch2_put.optionPrice() << endl;
 	cout << "Batch 3; Call: " << batch3_call.optionPrice() << " Put: " << batch3_put.optionPrice() << endl;
 	cout << "Batch 4; Call: " << batch4_call.optionPrice() << " Put: " << batch4_put.optionPrice() << endl;
 
-
+	/*
 	// Put-call parity
 	cout << "This should satisfy the put-call parity: " << endl;
 	double batch1_put_price = batch1_call.pcParity();
@@ -63,7 +65,7 @@ int main()
 	cout << "This should not satisfy the put-call parity: " << endl;
 	double bad_price = batch1_put_price + 1.0;
 	batch1_call.pcParity(bad_price);
-*/
+
 
 	// Create sequence of monotonically increasing prices
 	vector<double> strike_price_vec;
@@ -92,7 +94,7 @@ int main()
 	}
 	cout << endl;
 
-	
+
 	/*
 	// Part A.c
 	// define option parameters with array
