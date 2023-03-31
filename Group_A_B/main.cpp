@@ -29,14 +29,15 @@ int main()
 
   // define batch parameters
 	EuropeanOption::optionType type = EuropeanOption::optionType::call;
-	array<double, 5> batch1_param = { 0.25, 65.0, 0.30, 0.08, 60.0 };
-	array<double, 5> batch2_param = { 1.0, 100.0, 0.2, 0.0, 100.0 };
-	array<double, 5> batch3_param = { 1.0, 10.0, 0.50, 0.12, 5.0 };
-	array<double, 5> batch4_param = { 30.0, 100.0, 0.30, 0.08, 100.0 };
+	vector<double> batch1_param = { 0.25, 65.0, 0.30, 0.08, 60.0 };
+	vector<double> batch2_param = { 1.0, 100.0, 0.2, 0.0, 100.0 };
+	vector<double> batch3_param = { 1.0, 10.0, 0.50, 0.12, 5.0 };
+	vector<double> batch4_param = { 30.0, 100.0, 0.30, 0.08, 100.0 };
 
 	// Construct calls
 	EuropeanOption batch1_call = EuropeanOption(type, batch1_param);
-	EuropeanOption batch2_call = EuropeanOption(type, batch2_param);
+	cout << batch1_call.optionPrice() << endl;
+	/*EuropeanOption batch2_call = EuropeanOption(type, batch2_param);
 	EuropeanOption batch3_call = EuropeanOption(type, batch3_param);
 	EuropeanOption batch4_call = EuropeanOption(type, batch4_param);
 
@@ -45,7 +46,7 @@ int main()
 	EuropeanOption batch1_put = EuropeanOption(type_put, batch1_param);
 	EuropeanOption batch2_put = EuropeanOption(type_put, batch2_param);
 	EuropeanOption batch3_put = EuropeanOption(type_put, batch3_param);
-	EuropeanOption batch4_put = EuropeanOption(type_put, batch4_param);
+	EuropeanOption batch4_put = EuropeanOption(type_put, batch4_param);*/
 
 /*
 	// Check prices

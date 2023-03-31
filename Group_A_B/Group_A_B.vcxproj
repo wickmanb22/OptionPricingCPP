@@ -132,13 +132,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="EuropeanOption.h" />
-    <ClInclude Include="MatrixPricer.h" />
+    <ClInclude Include="OptionMatrix.h" />
     <ClInclude Include="Option.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EuropeanOption.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MatrixPricer.cpp" />
+    <ClCompile Include="OptionMatrix.cpp" />
     <ClCompile Include="Option.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -9,6 +9,7 @@
 #include <iostream>
 #include <cmath>
 #include <array>
+#include <vector>
 
 using namespace std;
 
@@ -28,7 +29,7 @@ public:
 	// constructors
 	Option(); // default
 	Option(optionType option_type, double expiry, double strike, double sig, double rf_rate, double asset_price);
-	Option(optionType option_type, array<double, 5>); // constructor with fixed-size array
+	Option(optionType option_type, vector<double>); // constructor with fixed-size array
 	Option(const Option& option); // copy constructor
 	virtual ~Option(); // destructor
 
