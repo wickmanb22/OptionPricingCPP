@@ -132,12 +132,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="EuropeanOption.h" />
-    <ClInclude Include="OptionMatrix.h" />
     <ClInclude Include="Option.h" />
+    <ClInclude Include="OptionMatrix.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EuropeanOption.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="exact_solutions.cpp" />
     <ClCompile Include="OptionMatrix.cpp" />
     <ClCompile Include="Option.cpp" />
   </ItemGroup>

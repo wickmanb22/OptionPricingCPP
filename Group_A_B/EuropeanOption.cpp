@@ -24,7 +24,7 @@ EuropeanOption::EuropeanOption() : Option() { }
 EuropeanOption::EuropeanOption(optionType option_type, double expiry, double strike, double sig,
 	double rf_rate, double asset_price) : Option(option_type, expiry, strike, sig, rf_rate, asset_price) { }
 
-EuropeanOption::EuropeanOption(optionType option_type, vector<double> option_input) : Option(option_type, option_input[0], option_input[1], option_input[2], option_input[3], option_input[4]) { }
+EuropeanOption::EuropeanOption(optionType option_type, array<double, 5> option_input) : Option(option_type, option_input[0], option_input[1], option_input[2], option_input[3], option_input[4]) { }
 
 EuropeanOption::EuropeanOption(const EuropeanOption& opt) : Option(opt) { }
 

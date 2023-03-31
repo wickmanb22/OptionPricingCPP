@@ -18,10 +18,10 @@
     <ClInclude Include="EuropeanOption.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Option.h">
+    <ClInclude Include="OptionMatrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OptionMatrix.h">
+    <ClInclude Include="Option.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -29,7 +29,7 @@
     <ClCompile Include="EuropeanOption.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="exact_solutions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Option.cpp">

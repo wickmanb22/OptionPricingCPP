@@ -15,15 +15,22 @@ using namespace std;
 class OptionMatrix
 {
 public:
+	vector<EuropeanOption> option_vector;
+
+public:
 	// constructors 
 	OptionMatrix();
-	OptionMatrix(vector<EuropeanOption>);
+	OptionMatrix(vector<EuropeanOption> vec_opt);
 	OptionMatrix(const OptionMatrix& source); // copy constructor
+	~OptionMatrix();
 
-	// operatorss
-	// assignment
-	
+	// operators
+	OptionMatrix& operator = (const OptionMatrix& mat); // assignment
+
+	// member functions
+	vector<double> matrixPricer() const; // input matrix, output vector of prices
 };
 
 
 #endif
+

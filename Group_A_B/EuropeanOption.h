@@ -19,7 +19,7 @@ public:
 	// constructors
 	EuropeanOption(); // default
 	EuropeanOption(optionType option_type, double expiry, double strike, double sig, double rf_rate, double asset_price);
-	EuropeanOption(optionType option_type, vector<double>); // constructor with fixed-size array
+	EuropeanOption(optionType option_type, array<double, 5>);
 	EuropeanOption(const EuropeanOption& opt); // copy constructor
 	virtual ~EuropeanOption(); // destructor
 
