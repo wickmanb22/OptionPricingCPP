@@ -38,5 +38,46 @@ vector<double> OptionMatrix::matrixPricer() const
 	return option_prices;
 }
 
+vector<double> OptionMatrix::matrixDelta() const
+{
+	vector<double> option_delta(option_vector.size());
+	for (int i = 0; i < option_vector.size(); i++)
+	{ // for each option in vector, compute the price
+		option_delta[i] = option_vector[i].deltaSensitivity();
+	}
+	return option_delta;
+}
+
+vector<double> OptionMatrix::matrixApproxDelta(double h) const
+{
+	vector<double> option_approx_delta(option_vector.size());
+	for (int i = 0; i < option_vector.size(); i++)
+	{ // for each option in vector, compute the price
+		option_approx_delta[i] = option_vector[i].approxDelta(h);
+	}
+	return option_approx_delta;
+}
+
+vector<double> OptionMatrix::matrixGamma() const
+{
+	vector<double> option_gamma(option_vector.size());
+	for (int i = 0; i < option_vector.size(); i++)
+	{ // for each option in vector, compute the price
+		option_gamma[i] = option_vector[i].gammaSensitivity();
+	}
+	return option_gamma;
+}
+
+vector<double> OptionMatrix::matrixApproxGamma(double h) const
+{
+	vector<double> option_approx_gamma(option_vector.size());
+	for (int i = 0; i < option_vector.size(); i++)
+	{ // for each option in vector, compute the price
+		option_approx_gamma[i] = option_vector[i].approxGamma(h);
+	}
+	return option_approx_gamma;
+}
+
+
 #endif
 

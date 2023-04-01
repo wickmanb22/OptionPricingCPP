@@ -19,7 +19,9 @@ public:
 	// constructors
 	EuropeanOption(); // default
 	EuropeanOption(optionType option_type, double expiry, double strike, double sig, double rf_rate, double asset_price);
+	EuropeanOption(optionType option_type, double expiry, double strike, double sig, double rf_rate, double asset_price, double cost_of_carry);
 	EuropeanOption(optionType option_type, array<double, 5>);
+	EuropeanOption(optionType option_type, array<double, 6>);
 	EuropeanOption(const EuropeanOption& opt); // copy constructor
 	virtual ~EuropeanOption(); // destructor
 
@@ -28,9 +30,12 @@ public:
 
 	// member functions
 	double optionPrice() const; 
-	//vector<double> optionPrice() const; 
 	double pcParity() const; // calculate corresponding option price
 	void pcParity(double option_price) const; // check if parity satisfied
+	double deltaSensitivity() const;
+	double approxDelta(double h) const;
+	double gammaSensitivity() const;
+	double approxGamma(double h) const;
 };
 
 #endif

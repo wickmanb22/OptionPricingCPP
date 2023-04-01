@@ -23,13 +23,17 @@ public:
 	double sig;
 	double rf_rate;
 	double asset_price;
+	double cost_of_carry;
 	optionType option_type;
 
 public:
 	// constructors
 	Option(); // default
 	Option(optionType option_type, double expiry, double strike, double sig, double rf_rate, double asset_price);
+	Option(optionType option_type, double expiry, double strike, double sig, double rf_rate, double asset_price, double cost_of_carry);
 	Option(optionType option_type, array<double, 5>); // constructor with fixed-size array
+	Option(optionType option_type, array<double, 6>); // constructor with fixed-size array
+
 	Option(const Option& option); // copy constructor
 	virtual ~Option(); // destructor
 

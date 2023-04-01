@@ -24,7 +24,12 @@ EuropeanOption::EuropeanOption() : Option() { }
 EuropeanOption::EuropeanOption(optionType option_type, double expiry, double strike, double sig,
 	double rf_rate, double asset_price) : Option(option_type, expiry, strike, sig, rf_rate, asset_price) { }
 
-EuropeanOption::EuropeanOption(optionType option_type, array<double, 5> option_input) : Option(option_type, option_input[0], option_input[1], option_input[2], option_input[3], option_input[4]) { }
+EuropeanOption::EuropeanOption(optionType option_type, double expiry, double strike, double sig,
+	double rf_rate, double asset_price, double cost_of_carry) : Option(option_type, expiry, strike, sig, rf_rate, asset_price, cost_of_carry) { }
+
+EuropeanOption::EuropeanOption(optionType option_type, array<double, 5> option_input) : Option(option_type, option_input) { }
+
+EuropeanOption::EuropeanOption(optionType option_type, array<double, 6> option_input) : Option(option_type, option_input) { }
 
 EuropeanOption::EuropeanOption(const EuropeanOption& opt) : Option(opt) { }
 
@@ -42,8 +47,7 @@ double EuropeanOption::optionPrice() const
 { // price of european option
 	// calculate d1, d2
 	double d1, d2;
-	double b = rf_rate; // for black-scholes stock options
-	d1 = (log(asset_price / strike) + (b + (sig * sig) / 2) * expiry) / (sig * sqrt(expiry));
+	d1 = (log(asset_price / strike) + (cost_of_carry + (sig * sig) / 2) * expiry) / (sig * sqrt(expiry));
 	d2 = d1 - (sig * sqrt(expiry));
 	
 	// standard normal CDF
@@ -52,11 +56,11 @@ double EuropeanOption::optionPrice() const
 	double option_price = 0.0;
 	if (option_type == call)
 	{ // call formula
-		option_price = (asset_price * cdf(standardNormal, d1)) - (strike * exp(-1 * rf_rate * expiry) * cdf(standardNormal, d2));
+		option_price = (asset_price * exp((cost_of_carry - rf_rate) * expiry) * cdf(standardNormal, d1)) - (strike * exp(-1 * rf_rate * expiry) * cdf(standardNormal, d2));
 	}
 	else if (option_type == put)
 	{
-		option_price = (strike * exp(-1 * rf_rate * expiry) * cdf(standardNormal, (-1 * d2))) - (asset_price * cdf(standardNormal, (-1 * d1)));
+		option_price = (strike * exp(-1 * rf_rate * expiry) * cdf(standardNormal, (-1 * d2))) - (asset_price * exp((cost_of_carry - rf_rate) * expiry) * cdf(standardNormal, (-1 * d1)));
 	}
 	else {
 		cout << "Invalid option type.";
@@ -117,5 +121,72 @@ void EuropeanOption::pcParity(double option_price) const
 		cout << "Invalid option type." << endl;
 	}
 }
+
+double EuropeanOption::deltaSensitivity() const
+{
+	// Define parameters
+	double d1 = 0.0, delta = 0.0;
+	d1 = (log(asset_price / strike) + (cost_of_carry + (sig * sig) / 2) * expiry) / (sig * sqrt(expiry));
+
+	// standard normal CDF
+	normal_distribution<double> standardNormal(0.0, 1.0);
+
+	if (option_type == call)
+	{
+		delta = exp((cost_of_carry - rf_rate) * expiry) * cdf(standardNormal, d1);
+	}
+	if (option_type == put)
+	{
+		delta = -1 * exp((cost_of_carry - rf_rate) * expiry) * cdf(standardNormal, (-1 * d1));
+	}
+	return delta;
+}
+
+double EuropeanOption::approxDelta(double h_val) const
+{
+	// define parameters
+	double estDelta = 0.0, h = h_val;
+	EuropeanOption bigCopy(*this), littleCopy(*this); // create two copies
+
+	// Modify asset prices
+	bigCopy.asset_price = this->asset_price + h;
+	littleCopy.asset_price = this->asset_price - h;
+
+	// Delta formula
+	estDelta = (bigCopy.optionPrice() - littleCopy.optionPrice()) / (2 * h);
+	return estDelta;
+}
+
+double EuropeanOption::gammaSensitivity() const
+{
+	// standard normal CDF
+	normal_distribution<double> standardNormal(0.0, 1.0);
+
+	// Define parameters
+	double d1;
+	d1 = (log(asset_price / strike) + (cost_of_carry + (sig * sig) / 2) * expiry) / (sig * sqrt(expiry));
+
+	// Calculate gamma
+	double gamma = 0.0;
+	gamma = pdf(standardNormal, d1) * exp((cost_of_carry - rf_rate) * expiry) / (asset_price * sig * sqrt(expiry));
+
+	return gamma;
+}
+
+double EuropeanOption::approxGamma(double h_val) const
+{
+	// define parameters
+	double estGamma = 0.0, h = h_val;
+	EuropeanOption bigCopy(*this), littleCopy(*this), origCopy(*this); // create two copies
+
+	// Modify asset prices
+	bigCopy.asset_price = this->asset_price + h;
+	littleCopy.asset_price = this->asset_price - h;
+
+	// Delta formula
+	estGamma = (bigCopy.optionPrice() - 2 * origCopy.optionPrice() + littleCopy.optionPrice()) / (h * h);
+	return estGamma;
+}
+
 
 #endif

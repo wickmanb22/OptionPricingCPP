@@ -93,7 +93,7 @@ int main()
 	// Assemble vector into OptionMatrix object 
 	OptionMatrix opt_matrix(vector_call);
 	vector<double> price_vec = opt_matrix.matrixPricer();
-
+	
 	// Calculate prices
 	for (int i = 0; i < vector_call.size(); i++)
 	{ // Print prices

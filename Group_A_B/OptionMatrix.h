@@ -22,13 +22,17 @@ public:
 	OptionMatrix();
 	OptionMatrix(vector<EuropeanOption> vec_opt);
 	OptionMatrix(const OptionMatrix& source); // copy constructor
-	~OptionMatrix();
+	virtual ~OptionMatrix();
 
 	// operators
 	OptionMatrix& operator = (const OptionMatrix& mat); // assignment
 
 	// member functions
-	vector<double> matrixPricer() const; // input matrix, output vector of prices
+	vector<double> matrixPricer() const; // input vector of options, output vector of prices
+	vector<double> matrixDelta() const;
+	vector<double> matrixApproxDelta(double h) const;
+	vector<double> matrixGamma() const;
+	vector<double> matrixApproxGamma(double h) const;
 };
 
 
