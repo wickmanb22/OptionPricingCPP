@@ -24,6 +24,9 @@
     <ClInclude Include="Option.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PerpAmericanOption.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EuropeanOption.cpp">
@@ -39,6 +42,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="option_sensitivities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="optionMatrix_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PerpAmericanOption.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="american_opt_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -134,17 +134,23 @@
     <ClInclude Include="EuropeanOption.h" />
     <ClInclude Include="Option.h" />
     <ClInclude Include="OptionMatrix.h" />
+    <ClInclude Include="PerpAmericanOption.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="american_opt_test.cpp" />
     <ClCompile Include="EuropeanOption.cpp" />
     <ClCompile Include="exact_solutions.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="OptionMatrix.cpp" />
     <ClCompile Include="Option.cpp" />
-    <ClCompile Include="option_sensitivities.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    <ClCompile Include="optionMatrix_test.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="option_sensitivities.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="PerpAmericanOption.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

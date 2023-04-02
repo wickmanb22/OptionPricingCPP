@@ -46,39 +46,42 @@ int main()
 	cout << "-----------Part C ---------" << endl;
 	cout << "Price of delta calls with asset prices 95, 100, 105, 110, 115, respectively" << endl;
 
-	// Create sequence of monotonically increasing prices
-	vector<double> asset_price_vec;
-	double start = 95;
-	double end = 115;
-	int h = 5;
-	asset_price_vec = meshArray(start, end, h);
+	// Create vector of European options that vary by strike price
+	vector <array<double, 6>> array_future_param = { future_param, future_param, future_param, future_param, future_param };
+	vector<double> asset_price_vec = meshArray(95, 115, 5);
 
-	// Create vector of options that vary by strike price
-	// Vector of European Options
-	vector<EuropeanOption> vector_call = { future_call, future_call,future_call,future_call,future_call };
+	vector<EuropeanOption> euro_option_vec;
+	for (int i = 0; i < array_future_param.size(); i++)
+	{ // create vector of european options
+		array_future_param[i][4] = asset_price_vec[i]; // replace asset price
+		EuropeanOption future_call = EuropeanOption(EuropeanOption::optionType::call, array_future_param[i]); // create EuroOption
+		euro_option_vec.push_back(future_call);
+	}
 
-	// Replace asset price of each option
-	for (int i = 0; i < vector_call.size(); i++)
+	// Create vector of option pointers
+	vector<Option*> future_call_vec;
+	for (int i = 0; i < euro_option_vec.size(); i++)
 	{
-		vector_call[i].asset_price = asset_price_vec[i];
+		Option* future_call_ptr = &euro_option_vec[i]; // create option pointer
+		future_call_vec.push_back(future_call_ptr); // add to vector of option pointers
 	}
 
 	// Assemble vector into OptionMatrix object 
-	OptionMatrix opt_matrix(vector_call);
-	vector<double> delta_vec = opt_matrix.matrixDelta();
+	OptionMatrix optMat = future_call_vec;
+	vector<double> delta_vec = optMat.matrixDelta();
 
 	// Delta prices
-	for (int i = 0; i < vector_call.size(); i++)
+	for (int i = 0; i < delta_vec.size(); i++)
 	{ // Print prices
 		cout << "Option #" << i + 1 << " delta price: " << delta_vec[i] << endl;
 	}
-
+	
 	// Gamma prices
 	cout << "Price of gamma calls with asset prices 95, 100, 105, 110, 115, respectively" << endl;
-	vector<double> gamma_vec = opt_matrix.matrixGamma();
+	vector<double> gamma_vec = optMat.matrixGamma();
 
 	// Output prices
-	for (int i = 0; i < vector_call.size(); i++)
+	for (int i = 0; i < gamma_vec.size(); i++)
 	{ // Print prices
 		cout << "Option #" << i + 1 << " gamma price: " << gamma_vec[i] << endl;
 	}
@@ -89,16 +92,15 @@ int main()
 
 	// Delta and gamma estimations
 	cout << "Approximate price of delta call: " << future_call.approxDelta(1) << endl;
-	cout << "Apporximate price of delta put: " << future_put.approxDelta(1) << endl;
-	cout << "Apporximate price of gamma call: " << future_call.approxGamma(1) << endl;
-	cout << "Apporximate price of gamma put: " << future_put.approxGamma(1) << endl;
+	cout << "Approximate price of delta put: " << future_put.approxDelta(1) << endl;
+	cout << "Approximate price of gamma call: " << future_call.approxGamma(1) << endl;
+	cout << "Approximate price of gamma put: " << future_put.approxGamma(1) << endl;
 
 	// Delta estimations for vector of options
 	cout << "Delta approximations for same options as above" << endl;
-	vector<double> delta_approx_vec = opt_matrix.matrixApproxDelta(1.0);
-	for (int i = 0; i < vector_call.size(); i++)
+	vector<double> delta_approx_vec = optMat.matrixApproxDelta(1.0);
+	for (int i = 0; i < delta_approx_vec.size(); i++)
 	{ // Print prices
 		cout << "Option #" << i + 1 << " delta price: " << delta_approx_vec[i] << endl;
 	}
-
 }

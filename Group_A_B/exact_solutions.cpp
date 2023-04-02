@@ -73,30 +73,34 @@ int main()
 	cout << "-----------Part C & D ---------" << endl;
 	cout << "Price of Batch 3 Calls with asset price 5, 10, 15, 20, respectively" << endl;
 
-	// Create sequence of monotonically increasing prices
-	vector<double> asset_price_vec;
-	double start = 5;
-	double end = 20;
-	int h = 5;
-	asset_price_vec = meshArray(start, end, h);
-
 	// Create vector of options that vary by strike price
-	// Vector of European Options
-	vector<EuropeanOption> vector_call = { batch3_call, batch3_call, batch3_call, batch3_call };
+	// Matrix of option parameters (vector of arrays)
+	vector<array<double, 5>> call_param = { batch3_param, batch3_param, batch3_param, batch3_param };
 
-	// Replace asset price of each array
-	for (int i = 0; i < vector_call.size(); i++)
+	// Create vector of European options with varying asset price
+	vector<double> asset_price_vec = meshArray(5, 20, 5);
+	vector<EuropeanOption> euro_option_vec;
+	for (int i = 0; i < call_param.size(); i++)
+	{ 
+		call_param[i][4] = asset_price_vec[i]; // replace asset price
+		EuropeanOption stock_call = EuropeanOption(EuropeanOption::optionType::call, call_param[i]); // create EuroOption
+		euro_option_vec.push_back(stock_call);
+	}
+
+	// Create vector of option pointers for OptionMatrix class
+	vector<Option*> stock_call_vec;
+	for (int i = 0; i < euro_option_vec.size(); i++)
 	{
-		vector_call[i].asset_price = asset_price_vec[i];
+		Option* stock_call_ptr = &euro_option_vec[i]; // create option pointer
+		stock_call_vec.push_back(stock_call_ptr); // add to vector of option pointers
 	}
-
-	// Assemble vector into OptionMatrix object 
-	OptionMatrix opt_matrix(vector_call);
-	vector<double> price_vec = opt_matrix.matrixPricer();
 	
-	// Calculate prices
-	for (int i = 0; i < vector_call.size(); i++)
+	// Price options
+	OptionMatrix optMat = stock_call_vec;
+	vector<double> matrixPrices = optMat.matrixPricer();
+	for (int i = 0; i < matrixPrices.size(); i++)
 	{ // Print prices
-		cout << "Option #" << i + 1 << " Price: " << price_vec[i] << endl;
+		cout << "Option #" << i + 1 << " Price: " << matrixPrices[i] << endl;
 	}
+	
 }

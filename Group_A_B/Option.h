@@ -40,8 +40,12 @@ public:
 	// operators
 	Option& operator = (const Option& opt); // assignment operator
 
-	// member functions
-	virtual double optionPrice() const = 0; // pure virtual function
+	// pure virtual member functions
+	virtual double optionPrice() const = 0; // pure virtual functions
+	virtual double deltaSensitivity() const = 0;
+	virtual double approxDelta(double h) const = 0;
+	virtual double gammaSensitivity() const = 0;
+	virtual double approxGamma(double h) const = 0;
 };
 
 #endif

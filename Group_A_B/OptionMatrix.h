@@ -12,15 +12,15 @@
 
 using namespace std;
 
-class OptionMatrix
+class OptionMatrix 
 {
 public:
-	vector<EuropeanOption> option_vector;
+	vector<Option*> option_vector;
 
 public:
 	// constructors 
 	OptionMatrix();
-	OptionMatrix(vector<EuropeanOption> vec_opt);
+	OptionMatrix(vector<Option*> vec_opt);
 	OptionMatrix(const OptionMatrix& source); // copy constructor
 	virtual ~OptionMatrix();
 
